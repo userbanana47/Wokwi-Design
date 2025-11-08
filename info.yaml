@@ -4,7 +4,7 @@ project:
   title:        "Wokwi Design Test"      # Project title
   author:       "Michael Schurz"      # Your name
   discord:      ""      # Your discord username, for communication and automatically assigning you a Tapeout role (optional)
-  description:  "TODO"      # One line description of what your project does
+  description:  "Test"      # One line description of what your project does
   language:     "Wokwi" # other examples include SystemVerilog, Amaranth, VHDL, etc
   clock_hz:     0       # Clock frequency in Hz (or 0 if not applicable)
 
@@ -26,14 +26,14 @@ pinout:
   ui[7]: "in7"
 
   # Outputs
-  uo[0]: "out0"
-  uo[1]: "out1"
-  uo[2]: "out2"
-  uo[3]: "out3"
-  uo[4]: "out4"
-  uo[5]: "out5"
-  uo[6]: "out6"
-  uo[7]: "out7"
+  uo[0]: "7seg a1"
+  uo[1]: "7seg b2"
+  uo[2]: "7seg c3"
+  uo[3]: "7seg d4"
+  uo[4]: "7seg e5"
+  uo[5]: "7seg f6"
+  uo[6]: "7seg g7"
+  uo[7]: ""
 
   # Bidirectional pins
   uio[0]: ""
