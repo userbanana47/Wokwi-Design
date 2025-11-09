@@ -82,30 +82,54 @@ module tt_um_seven_segment_games (
     wire [3:0] reaction_value;
     
     reg [3:0] display_value;
+	
+	// button logic for active game
+
+    wire is_counter_selected = (game_select_reg == 2'b00);
+    wire is_dice_selected    = (game_select_reg == 2'b01);
+    wire is_hl_selected      = (game_select_reg == 2'b10);
+    wire is_reaction_selected= (game_select_reg == 2'b11);
 
     // 1. game_counter (btn1: inc, btn2: dec)
+    wire counter_inc_btn = btn1_pulse && is_counter_selected;
+    wire counter_dec_btn = btn2_pulse && is_counter_selected;
+    
+    // 2. game_dice (btn1: roll)
+    wire dice_roll_btn = btn1_pulse && is_dice_selected;
+
+    // 3. game_higher_lower (btn1: higher, btn2: lower)
+    wire hl_higher_btn = btn1_pulse && is_hl_selected;
+    wire hl_lower_btn  = btn2_pulse && is_hl_selected;
+
+    // 4. game_reaction
+    wire reaction_btn1 = btn1_pulse && is_reaction_selected;
+    wire reaction_btn2 = btn2_pulse && is_reaction_selected;
+    wire reaction_btn3 = btn3_pulse && is_reaction_selected;
+    wire reaction_btn4 = btn4_pulse && is_reaction_selected;
+
+    // 1. game_counter
     game_counter counter_inst (
         .clk(clk),
         .reset(reset),
-        .inc_btn(btn1_pulse),
-        .dec_btn(btn2_pulse),
+        .inc_btn(counter_inc_btn),
+        .dec_btn(counter_dec_btn),
         .value(counter_value)
     );
 
-    // 2. game_dice (btn1: roll)
+    // 2. game_dice
     game_dice dice_inst (
         .clk(clk),
         .reset(reset),
-        .roll_btn(btn1_pulse),
+        .roll_btn(dice_roll_btn),
         .value(dice_value)
     );
 
-    // 3. game_higher_lower (btn1: higher, btn2: lower)
+    // 3. game_higher_lower
     game_higher_lower higher_lower_inst (
         .clk(clk),
         .reset(reset),
-        .btn_higher(btn1_pulse),
-        .btn_lower(btn2_pulse),
+        .btn_higher(hl_higher_btn),
+        .btn_lower(hl_lower_btn),
         .value(higher_lower_value)
     );
 
@@ -113,10 +137,10 @@ module tt_um_seven_segment_games (
     game_reaction reaction_inst (
         .clk(clk),
         .reset(reset),
-        .btn1(btn1_pulse),
-        .btn2(btn2_pulse),
-        .btn3(btn3_pulse),
-        .btn4(btn4_pulse),
+        .btn1(reaction_btn1),
+        .btn2(reaction_btn2),
+        .btn3(reaction_btn3),
+        .btn4(reaction_btn4),
         .value(reaction_value)
     );
 
