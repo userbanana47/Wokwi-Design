@@ -12,9 +12,9 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-`include "button_debounce.v"
-`include "button_sync.v"
-`include "button_pulse.v"
+//`include "button_debounce.v"
+//`include "button_sync.v"
+//`include "button_pulse.v"
 
 module button(
     input wire clk, 
