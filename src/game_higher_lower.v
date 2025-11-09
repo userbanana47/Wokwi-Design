@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-`include "random_digit.v"
+//`include "random_digit.v"
 
 module game_higher_lower(
     input  wire clk,
