@@ -12,15 +12,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-`include "button.v"
+//`include "button.v"
 //`include "button_pulse.v"
 //`include "button_sync.v"
 //`include "button_debounce.v"
-`include "sevenseg_driver.v"
-`include "game_dice.v"
-`include "game_counter.v"
-`include "game_higher_lower.v"
-`include "game_reaction.v"
+//`include "sevenseg_driver.v"
+//`include "game_dice.v"
+//`include "game_counter.v"
+//`include "game_higher_lower.v"
+//`include "game_reaction.v"
 //`include "random_digit.v"
 
 module tt_um_seven_segment_games (
