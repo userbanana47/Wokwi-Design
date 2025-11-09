@@ -21,19 +21,23 @@ module random_digit (
 );
     reg [3:0] lfsr = 4'b1010;
 	wire feedback = lfsr[3] ^ lfsr[2];
-
+    
+    reg [3:0] rnd_next; 
+    
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             lfsr <= 4'b1010;
+            rnd  <= 4'd0;
         end else begin
             lfsr <= {lfsr[2:0], feedback};
+            rnd  <= rnd_next;
         end
     end
 
-    always @(posedge clk) begin
+    always @(*) begin
         if (lfsr[3:0] < 4'd10)
-            rnd <= lfsr;
+            rnd_next = lfsr;
         else
-            rnd <= lfsr - 4'd10;  // wrap um 10
+            rnd_next = lfsr - 4'd10;
     end
 endmodule
