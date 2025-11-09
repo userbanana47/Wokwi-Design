@@ -14,6 +14,8 @@
 
 //`include "random_digit.v"
 
+//`timescale 1ns / 1ps
+
 module game_dice(
     input  wire clk,
     input  wire reset,
