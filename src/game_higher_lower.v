@@ -14,6 +14,8 @@
 
 //`include "random_digit.v"
 
+//`timescale 1ns / 1ps
+
 module game_higher_lower(
     input  wire clk,
     input  wire reset,
@@ -37,12 +39,11 @@ module game_higher_lower(
 	
     // Delay-Counter
     localparam COUNTER_LEN = 24;
-    localparam DELAY_TIME = 10_000_000;
+    localparam DELAY_TIME = 10_000_000;//5_000
     reg [COUNTER_LEN-1:0] counter_val, next_counter_val;
 
     reg [3:0] next_value;
 
-    // --- Sequentieller Teil ---
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             fsm_state    <= CHECK;
@@ -57,7 +58,6 @@ module game_higher_lower(
         end
     end
 	
-    // --- Kombinatorik ---
     always @(*) begin
         next_fsm_state   = fsm_state;
         next_num         = current_num;
@@ -66,7 +66,6 @@ module game_higher_lower(
 
         case (fsm_state)
             CHECK: begin
-                next_num = rnd;
                 next_value = current_num;
                 next_counter_val = 0;
 
@@ -83,6 +82,7 @@ module game_higher_lower(
                 if (counter_val >= DELAY_TIME) begin
                     next_fsm_state   = CHECK;
                     next_counter_val = 0;
+					next_num = rnd;
                 end else begin
                     next_counter_val = counter_val + 1;
                 end
