@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//`timescale 1ns / 1ps
+
 module button_debounce(
 	input wire clk,
 	input wire reset,
@@ -21,12 +23,12 @@ module button_debounce(
 	// FSM
 	reg [1:0] 	fsm_state, next_fsm_state;
 	parameter 	IDLE = 2'b00,
-				CHANGE = 2'b01,
-				STABLE = 2'b10;
+				CHANGE = 2'b01;
+				//STABLE = 2'b10;
 	
 	// counter
 	parameter COUNTER_LEN = 19;
-	parameter DEBOUNCE_VALUE = 500_000;
+	parameter DEBOUNCE_VALUE = 5_000;//500_000;
 	reg [COUNTER_LEN-1:0] counter_val, next_counter_val;
 	
 	reg next_debounce;
@@ -60,7 +62,7 @@ module button_debounce(
 				if (btn == debounce) begin
 					next_fsm_state = IDLE;
 				end else if (counter_val >= DEBOUNCE_VALUE) begin
-					next_fsm_state = STABLE;
+					next_fsm_state = IDLE;
 					next_debounce = btn;
 				end else if (btn == 0) begin
 					next_fsm_state = IDLE;
@@ -69,10 +71,10 @@ module button_debounce(
 					next_counter_val = counter_val + 1;
 				end
 			end
-			
+/* 			
 			STABLE: begin
 				next_fsm_state = IDLE;
-			end
+			end */
 			
 			default: begin
 				next_fsm_state = IDLE;
