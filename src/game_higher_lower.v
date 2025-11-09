@@ -1,0 +1,96 @@
+// Copyright 2025 Michael Schurz
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+// http://www.apache.org/licenses/LICENSE−2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+`include "random_digit.v"
+
+module game_higher_lower(
+    input  wire clk,
+    input  wire reset,
+    input  wire btn_higher,
+    input  wire btn_lower,
+    output reg  [3:0] value
+);
+    wire [3:0] rnd;
+    random_digit rng (
+        .clk(clk),
+        .reset(reset),
+        .rnd(rnd)
+    );
+	
+    // FSM
+    reg fsm_state, next_fsm_state;
+    localparam CHECK = 1'b0,
+               UPDATE = 1'b1;
+
+    reg [3:0] current_num, next_num;
+	
+    // Delay-Counter
+    localparam COUNTER_LEN = 24;
+    localparam DELAY_TIME = 10_000_000;
+    reg [COUNTER_LEN-1:0] counter_val, next_counter_val;
+
+    reg [3:0] next_value;
+
+    // --- Sequentieller Teil ---
+    always @(posedge clk or posedge reset) begin
+        if (reset) begin
+            fsm_state    <= CHECK;
+            current_num  <= rnd;
+            counter_val  <= 0;
+            value        <= rnd;
+        end else begin
+            fsm_state    <= next_fsm_state;
+            current_num  <= next_num;
+            counter_val  <= next_counter_val;
+            value        <= next_value;
+        end
+    end
+	
+    // --- Kombinatorik ---
+    always @(*) begin
+        next_fsm_state   = fsm_state;
+        next_num         = current_num;
+        next_counter_val = counter_val;
+        next_value       = value;
+
+        case (fsm_state)
+            CHECK: begin
+                next_num = rnd;
+                next_value = current_num;
+                next_counter_val = 0;
+
+                if (btn_higher && !btn_lower) begin
+                    next_value = (rnd > current_num) ? 4'd10 : 4'd11;
+                    next_fsm_state = UPDATE;
+                end else if (!btn_higher && btn_lower) begin
+                    next_value = (rnd < current_num) ? 4'd10 : 4'd11;
+                    next_fsm_state = UPDATE;
+                end
+            end
+			
+            UPDATE: begin
+                if (counter_val >= DELAY_TIME) begin
+                    next_fsm_state   = CHECK;
+                    next_counter_val = 0;
+                end else begin
+                    next_counter_val = counter_val + 1;
+                end
+            end
+			
+            default: begin
+                next_fsm_state = CHECK;
+            end
+        endcase
+    end
+endmodule
