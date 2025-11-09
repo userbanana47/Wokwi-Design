@@ -72,7 +72,7 @@ module game_reaction(
 
                 // random delay time
                 if (counter_val >= (DELAY_TIME + (rnd * 10_000_000))) begin
-                    next_target_num = (rnd % 4) + 1;
+					next_target_num = rnd[1:0] + 4'd1;
                     next_counter_val = 0;
                     next_fsm_state = SHOW;
                 end
