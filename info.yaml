@@ -22,16 +22,21 @@ project:
     - "button_pulse.v"
     - "button.v"
     - "random_digit.v"
+    - "sevenseg_driver.v"
+    - "game_counter.v"
+    - "game_dice.v"
+    - "game_higher_lower.v"
+    - "game_reaction.v"
     - "tt_um_seven_segment_games.v"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
 # This section is for the datasheet/website. Use descriptive names (e.g., RX, TX, MOSI, SCL, SEG_A, etc.).
 pinout:
   # Inputs
-  ui[0]: "btn1_1"
-  ui[1]: "btn2_2"
-  ui[2]: "btn3_3"
-  ui[3]: "btn4_4"
+  ui[0]: "btn1"
+  ui[1]: "btn2"
+  ui[2]: "btn3"
+  ui[3]: "btn4"
   ui[4]: ""
   ui[5]: ""
   ui[6]: ""
