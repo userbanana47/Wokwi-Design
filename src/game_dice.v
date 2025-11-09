@@ -31,10 +31,15 @@ module game_dice(
 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
-            value <= 4'd1; // start
+            value <= 4'd1;
         end else if (roll_btn) begin
-            // limit to range 1-6
-            value <= (rnd % 6) + 1;
+            if (rnd >= 4'd12) begin
+                value <= (rnd - 4'd12) + 1;
+            end else if (rnd >= 4'd6) begin
+                value <= (rnd - 4'd6) + 1;
+            end else begin
+                value <= rnd + 1;
+            end
         end
     end
 endmodule
