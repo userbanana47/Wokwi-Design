@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//`include "random_digit.v"
+
 module game_dice(
     input  wire clk,
     input  wire reset,
@@ -19,7 +21,6 @@ module game_dice(
     output reg  [3:0] value
 );
     wire [3:0] rnd;
-
     random_digit rng (
         .clk(clk),
         .reset(reset),
