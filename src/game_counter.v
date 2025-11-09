@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//`timescale 1ns / 1ps
+
 module game_counter(
     input  wire clk,
     input  wire reset,        // global reset
@@ -24,13 +26,13 @@ module game_counter(
             value <= 4'd0;
         end else begin
             if (inc_btn && !dec_btn) begin
-                // +1 mit wrap-around
+                // +1 with wrap-around
                 if (value == 4'd9)
                     value <= 4'd0;
                 else
                     value <= value + 1;
             end else if (dec_btn && !inc_btn) begin
-                // -1 mit wrap-around
+                // -1 with wrap-around
                 if (value == 4'd0)
                     value <= 4'd9;
                 else
