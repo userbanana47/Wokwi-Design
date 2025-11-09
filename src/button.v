@@ -12,6 +12,8 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+//`timescale 1ns / 1ps
+
 //`include "button_debounce.v"
 //`include "button_sync.v"
 //`include "button_pulse.v"
