@@ -4,6 +4,18 @@
 /* This testbench just instantiates the module and makes some convenient wires
    that can be driven / tested by the cocotb test.py.
 */
+
+`include "../src/button.v"
+`include "../src/button_pulse.v"
+`include "../src/button_sync.v"
+`include "../src/button_debounce.v"
+`include "../src/sevenseg_driver.v"
+`include "../src/game_dice.v"
+`include "../src/game_counter.v"
+`include "../src/game_higher_lower.v"
+`include "../src/game_reaction.v"
+`include "../src/random_digit.v"
+
 module tb ();
 
   // Dump the signals to a VCD file. You can view it with gtkwave or surfer.
@@ -28,7 +40,7 @@ module tb ();
 `endif
 
   // Replace tt_um_example with your module name:
-  tt_um_example user_project (
+  tt_um_seven_segment_games  user_project (
 
       // Include power ports for the Gate Level test:
 `ifdef GL_TEST
