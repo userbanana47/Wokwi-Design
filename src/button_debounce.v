@@ -24,11 +24,10 @@ module button_debounce(
 	reg [1:0] 	fsm_state, next_fsm_state;
 	parameter 	IDLE = 2'b00,
 				CHANGE = 2'b01;
-				//STABLE = 2'b10;
 	
 	// counter
 	parameter COUNTER_LEN = 19;
-	parameter DEBOUNCE_VALUE = 5_000;//500_000;
+	parameter DEBOUNCE_VALUE = 500_000;//5_000;
 	reg [COUNTER_LEN-1:0] counter_val, next_counter_val;
 	
 	reg next_debounce;
@@ -71,10 +70,6 @@ module button_debounce(
 					next_counter_val = counter_val + 1;
 				end
 			end
-/* 			
-			STABLE: begin
-				next_fsm_state = IDLE;
-			end */
 			
 			default: begin
 				next_fsm_state = IDLE;
