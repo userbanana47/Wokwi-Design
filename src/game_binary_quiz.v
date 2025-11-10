@@ -52,6 +52,9 @@ module game_binary_quiz(
     localparam DELAY_TIME  = 10_000_000;//1s delay
     reg [COUNTER_LEN-1:0] counter_val, next_counter_val;
 
+	reg [4:0] pressed_btn;
+	reg [2:0] new_rnd_num;
+
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             fsm_state     <= WAIT;
@@ -73,7 +76,7 @@ module game_binary_quiz(
         next_value       = value;
         
 		// safe pressed button
-        reg [4:0] pressed_btn;
+        //reg [4:0] pressed_btn;
         if (btn1) 		pressed_btn = 4'd1;
         else if (btn2) 	pressed_btn = 4'd2;
         else if (btn3) 	pressed_btn = 4'd3;
@@ -84,13 +87,13 @@ module game_binary_quiz(
 		else 			pressed_btn = 4'd0;
 
 		// new random number
-        reg [2:0] new_rnd_num;
+        //reg [2:0] new_rnd_num;
 		new_rnd_num = rnd[2:0];	//only use first 3 bits (0-7)
 		if (new_rnd_num == 3'd0) begin
 			new_rnd_num = 3'd5;
 		end
 		
-		next_target_num = new_rnd_num;
+		//next_target_num = new_rnd_num;
 
         case (fsm_state)
             WAIT: begin
