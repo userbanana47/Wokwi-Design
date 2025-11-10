@@ -14,7 +14,7 @@ SEG_9 = 0b1101111  # "9"
 btn_1 = 0b00000001    # button 1
 btn_2 = 0b00000010    # button 2
 btn_3 = 0b00000100    # button 3
-btn_4 = 0b00001000    # button 4
+btn_4 = 0b10000000    # button 4
 btn_sw = 0b00010000    # button switch game
 btn_off = 0b00000000    # disable button
 
@@ -45,7 +45,9 @@ async def test_project(dut):
     # After two clock cycles the 7seg should still show the number 0
     assert dut.uo_out.value == SEG_0, f"FAIL: Test 2 expected 0b0111111"
 
-    # 3. Test increment
+    # Test counter module (default when reset)
+    
+    # Test increment of counter
     
     # increment: 0 -> 1
     dut.ui_in.value = btn_1
@@ -67,7 +69,7 @@ async def test_project(dut):
     await ClockCycles(dut.clk, 100) 
     assert dut.uo_out.value == SEG_2, f"FAIL: Test 6 expected 0b0000110"
     
-    # 4. Test decrement
+    # Test decrement of counter
     
     # decrement: 2 -> 1
     dut.ui_in.value = btn_2
@@ -89,6 +91,7 @@ async def test_project(dut):
     await ClockCycles(dut.clk, 100) 
     assert dut.uo_out.value == SEG_0, f"FAIL: Test 10 expected 0b0111111"
 
+    # Test counter module passed
     dut._log.info("Counter Test erfolgreich.")
 
     # Set the input values you want to test
