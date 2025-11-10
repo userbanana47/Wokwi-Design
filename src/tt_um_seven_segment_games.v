@@ -158,9 +158,9 @@ module tt_um_seven_segment_games (
         .btn2(reaction_btn2),
         .btn3(reaction_btn3),
         .btn4(reaction_btn4),
-		.btn4(reaction_btn5),
-		.btn4(reaction_btn6),
-		.btn4(reaction_btn7),
+		.btn5(reaction_btn5),
+		.btn6(reaction_btn6),
+		.btn7(reaction_btn7),
 		.value(quiz_value)
     );
 
