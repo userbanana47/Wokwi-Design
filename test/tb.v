@@ -13,7 +13,6 @@
 `include "../src/game_dice.v"
 `include "../src/game_counter.v"
 `include "../src/game_higher_lower.v"
-`include "../src/game_reaction.v"
 `include "../src/random_digit.v"
 
 module tb ();
