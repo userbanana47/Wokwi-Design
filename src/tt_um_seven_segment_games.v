@@ -83,7 +83,7 @@ module tt_um_seven_segment_games (
     wire [3:0] counter_value;
     wire [3:0] dice_value;
     wire [3:0] higher_lower_value;
-    wire [3:0] reaction_value;
+//    wire [3:0] reaction_value;
     
     reg [3:0] display_value;
 	
