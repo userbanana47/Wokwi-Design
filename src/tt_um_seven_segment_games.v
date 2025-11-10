@@ -75,7 +75,7 @@ module tt_um_seven_segment_games (
 	// game selector (00=Counter, 01=Dice, 10=Higher/Lower, 11=quiz)
     reg [1:0] game_select_reg;
     
-    // choose game
+	// cycle games (game_binary_quiz disabled -> no 2'b11)
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             game_select_reg <= 2'b00; // start with counter
@@ -89,16 +89,16 @@ module tt_um_seven_segment_games (
         end
     end
 
-    // game outputs
+    // game display outputs
     wire [3:0] counter_value;
     wire [3:0] dice_value;
     wire [3:0] higher_lower_value;
 	//wire [3:0] quiz_value;
-    
+
+	// 7seg display value
     reg [3:0] display_value;
 	
 	// button logic for active game
-
     wire is_counter_selected = (game_select_reg == 2'b00);
     wire is_dice_selected    = (game_select_reg == 2'b01);
     wire is_hl_selected      = (game_select_reg == 2'b10);
@@ -151,7 +151,7 @@ module tt_um_seven_segment_games (
     );
 
 	// 4. game_binary_quiz
-/*    game_binary_quiz quiz_inst (
+/*	game_binary_quiz quiz_inst (
         .clk(clk),
         .reset(reset),
         .btn1(quiz_btn1),
@@ -164,14 +164,14 @@ module tt_um_seven_segment_games (
 		.value(quiz_value)
     );*/
 
-    // multiplexer for games
+    // multiplexer for game display output
     always @(*) begin
         case (game_select_reg)
             2'b00: display_value = counter_value;        // 0: counter
             2'b01: display_value = dice_value;           // 1: dice
             2'b10: display_value = higher_lower_value;   // 2: higher/lower
             //2'b11: display_value = quiz_value;       	 // 3: quiz
-            default: display_value = 4'd12;              // Default: Off
+			default: display_value = 4'd12;              // 7seg off (empty)
         endcase
     end
 
