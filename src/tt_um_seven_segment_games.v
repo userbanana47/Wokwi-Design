@@ -116,13 +116,13 @@ module tt_um_seven_segment_games (
     wire hl_lower_btn  = btn2_pulse && is_hl_selected;
 
 	// 4. game_reaction
-    wire reaction_btn1 = btn1_pulse && is_reaction_selected;
-    wire reaction_btn2 = btn2_pulse && is_reaction_selected;
-    wire reaction_btn3 = btn3_pulse && is_reaction_selected;
-    wire reaction_btn4 = btn4_pulse && is_reaction_selected;
-	wire reaction_btn5 = btn5_pulse && is_reaction_selected;
-	wire reaction_btn6 = btn6_pulse && is_reaction_selected;
-	wire reaction_btn7 = btn7_pulse && is_reaction_selected;
+    wire quiz_btn1 = btn1_pulse && is_quiz_selected;
+    wire quiz_btn2 = btn2_pulse && is_quiz_selected;
+    wire quiz_btn3 = btn3_pulse && is_quiz_selected;
+    wire quiz_btn4 = btn4_pulse && is_quiz_selected;
+	wire quiz_btn5 = btn5_pulse && is_quiz_selected;
+	wire quiz_btn6 = btn6_pulse && is_quiz_selected;
+	wire quiz_btn7 = btn7_pulse && is_quiz_selected;
 
     // 1. game_counter
     game_counter counter_inst (
@@ -154,13 +154,13 @@ module tt_um_seven_segment_games (
     game_binary_quiz quiz_inst (
         .clk(clk),
         .reset(reset),
-        .btn1(reaction_btn1),
-        .btn2(reaction_btn2),
-        .btn3(reaction_btn3),
-        .btn4(reaction_btn4),
-		.btn5(reaction_btn5),
-		.btn6(reaction_btn6),
-		.btn7(reaction_btn7),
+        .btn1(quiz_btn1),
+        .btn2(quiz_btn2),
+        .btn3(quiz_btn3),
+        .btn4(quiz_btn4),
+		.btn5(quiz_btn5),
+		.btn6(quiz_btn6),
+		.btn7(quiz_btn7),
 		.value(quiz_value)
     );
 
