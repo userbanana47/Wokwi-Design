@@ -33,6 +33,7 @@ async def test_project(dut):
     # Nach Reset sollte der 7-Segment-Ausgang 0 anzeigen (value=0 -> seg=0111111)
     # Beachte: uo_out ist 8-Bit, Bits 7:0. Wir prüfen nur 6:0, Bit 7 sollte 0 sein.
     #assert dut.uo_out.value.integer & 0b01111111 == SEG_0, "FAIL: Initialwert sollte 0 sein"
+    assert dut.uo_out.value == SEG_0
 
     # 2. Setup: Counter Mode wählen (ui_in[1:0] = 00)
     # UI_IN Zuweisung: [Modus: 1:0]
