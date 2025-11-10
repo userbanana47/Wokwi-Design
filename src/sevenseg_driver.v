@@ -30,8 +30,8 @@ module sevenseg_driver(
             9: 	seg = 7'b1101111; // 9
 			10: seg = 7'b0111001; // Correct
 			11: seg = 7'b1111001; // Error
-			12: seg = 7'b0000000; //off
-			13: seg = 7'b1001011; //?
+			12: seg = 7'b0000000; // off
+			13: seg = 7'b1001011; // ?
             default: seg = 7'b0000000; // off
         endcase
     end
