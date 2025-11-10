@@ -71,7 +71,11 @@ module tt_um_seven_segment_games (
         if (reset) begin
             game_select_reg <= 2'b00; // start with counter
         end else if (btn_switch_pulse) begin
-            game_select_reg <= game_select_reg + 1'b1;
+            if (game_select_reg == 2'b10) begin
+				game_select_reg <= 2'b00;
+			end else begin
+				game_select_reg <= game_select_reg + 1'b1;
+			end
         end
     end
 
@@ -88,7 +92,7 @@ module tt_um_seven_segment_games (
     wire is_counter_selected = (game_select_reg == 2'b00);
     wire is_dice_selected    = (game_select_reg == 2'b01);
     wire is_hl_selected      = (game_select_reg == 2'b10);
-    wire is_reaction_selected= (game_select_reg == 2'b11);
+//    wire is_reaction_selected= (game_select_reg == 2'b11);
 
     // 1. game_counter (btn1: inc, btn2: dec)
     wire counter_inc_btn = btn1_pulse && is_counter_selected;
@@ -101,11 +105,11 @@ module tt_um_seven_segment_games (
     wire hl_higher_btn = btn1_pulse && is_hl_selected;
     wire hl_lower_btn  = btn2_pulse && is_hl_selected;
 
-    // 4. game_reaction
+/*     // 4. game_reaction
     wire reaction_btn1 = btn1_pulse && is_reaction_selected;
     wire reaction_btn2 = btn2_pulse && is_reaction_selected;
     wire reaction_btn3 = btn3_pulse && is_reaction_selected;
-    wire reaction_btn4 = btn4_pulse && is_reaction_selected;
+    wire reaction_btn4 = btn4_pulse && is_reaction_selected; */
 
     // 1. game_counter
     game_counter counter_inst (
@@ -133,7 +137,7 @@ module tt_um_seven_segment_games (
         .value(higher_lower_value)
     );
 
-    // 4. game_reaction
+/*     // 4. game_reaction
     game_reaction reaction_inst (
         .clk(clk),
         .reset(reset),
@@ -142,7 +146,7 @@ module tt_um_seven_segment_games (
         .btn3(reaction_btn3),
         .btn4(reaction_btn4),
         .value(reaction_value)
-    );
+    ); */
 
     // multiplexer for games
     always @(*) begin
@@ -150,7 +154,7 @@ module tt_um_seven_segment_games (
             2'b00: display_value = counter_value;        // 0: counter
             2'b01: display_value = dice_value;           // 1: dice
             2'b10: display_value = higher_lower_value;   // 2: higher/lower
-            2'b11: display_value = reaction_value;       // 3: reaction
+            //2'b11: display_value = reaction_value;       // 3: reaction
             default: display_value = 4'd12;              // Default: Off
         endcase
     end
