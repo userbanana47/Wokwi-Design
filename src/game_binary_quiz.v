@@ -52,7 +52,7 @@ module game_binary_quiz(
     localparam DELAY_TIME  = 10_000_000;//1s delay
     reg [COUNTER_LEN-1:0] counter_val, next_counter_val;
 
-	reg [4:0] pressed_btn;
+	reg [2:0] pressed_btn;
 	reg [2:0] new_rnd_num;
 
     always @(posedge clk or posedge reset) begin
@@ -76,15 +76,15 @@ module game_binary_quiz(
         next_value       = value;
         
 		// safe pressed button
-        //reg [4:0] pressed_btn;
-        if (btn1) 		pressed_btn = 4'd1;
-        else if (btn2) 	pressed_btn = 4'd2;
-        else if (btn3) 	pressed_btn = 4'd3;
-        else if (btn4) 	pressed_btn = 4'd4;
-		else if (btn5) 	pressed_btn = 4'd5;
-		else if (btn6) 	pressed_btn = 4'd6;
-		else if (btn7) 	pressed_btn = 4'd7;
-		else 			pressed_btn = 4'd0;
+        //reg [2:0] pressed_btn;
+        if (btn1) 		pressed_btn = 3'd1;
+        else if (btn2) 	pressed_btn = 3'd2;
+        else if (btn3) 	pressed_btn = 3'd3;
+        else if (btn4) 	pressed_btn = 3'd4;
+		else if (btn5) 	pressed_btn = 3'd5;
+		else if (btn6) 	pressed_btn = 3'd6;
+		else if (btn7) 	pressed_btn = 3'd7;
+		else 			pressed_btn = 3'd0;
 
 		// new random number
         //reg [2:0] new_rnd_num;
@@ -100,7 +100,7 @@ module game_binary_quiz(
                 next_value = 4'd12; // 7seg off
                 next_counter_val = 0;
                 
-                if (pressed_btn != 4'd0) begin // start with any button
+                if (pressed_btn != 3'd0) begin // start with any button
                     next_target_num = new_rnd_num;
                     next_fsm_state = SHOW_BIT1;
                 end
@@ -127,7 +127,7 @@ module game_binary_quiz(
                 next_value = 4'd13; // show '?'
                 next_counter_val = 0;
 
-                if (pressed_btn != 4'd0) begin
+                if (pressed_btn != 3'd0) begin
                     next_fsm_state = RESULT;
                     
                     if (pressed_btn == target_num) begin
