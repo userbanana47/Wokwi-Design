@@ -11,9 +11,12 @@ SEG_2 = 0b1011011  # "2"
 SEG_3 = 0b1001111  # "3"
 SEG_9 = 0b1101111  # "9"
 
-btn_1 = 0b00000001
-btn_2 = 0b00000010
-btn_off = 0b00000000
+btn_1 = 0b00000001    # button 1
+btn_2 = 0b00000010    # button 2
+btn_3 = 0b00000100    # button 3
+btn_4 = 0b00001000    # button 4
+btn_sw = 0b00010000    # button switch game
+btn_off = 0b00000000    # disable button
 
 @cocotb.test()
 async def test_project(dut):
@@ -36,16 +39,8 @@ async def test_project(dut):
 
     # After the reset the 7seg should show the number 0 (SEG_0 -> 0b0111111)
     assert dut.uo_out.value == SEG_0, f"FAIL: Test 1 expected 0b0111111"
-
-    # 2. Setup: Counter Mode wählen (ui_in[1:0] = 00)
-    # UI_IN Zuweisung: [Modus: 1:0]
-    #MODE_COUNTER = 0b00 
-    # Setze Modus und alle Taster (ui_in[7:2]) auf 0, ui_in[1:0] auf Counter Mode (00)
-    #dut.ui_in.value = MODE_COUNTER
-    #dut.uio_in.value = 0 # Nur falls benötigt, ansonsten 0
-
+    
     await ClockCycles(dut.clk, 2)
-    #dut._log.info("Im Counter Modus (00) gestartet")
 
     # After two clock cycles the 7seg should still show the number 0
     assert dut.uo_out.value == SEG_0, f"FAIL: Test 2 expected 0b0111111"
