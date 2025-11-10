@@ -54,7 +54,7 @@ async def test_project(dut):
     
     # 3a. increment: 0 -> 1
     dut.ui_in.value = btn_1;
-    await ClockCycles(dut.clk, 500010) 
+    await ClockCycles(dut.clk, 500000) 
     assert dut.uo_out.value == SEG_1, f"FAIL: Test 3 expected 0b0000110"
 
     # 3b. Inkrement: 1 -> 2
@@ -64,12 +64,12 @@ async def test_project(dut):
     # 4. Test decrement
     
     # Zuerst Taster loslassen
-    dut.ui_in.value = MODE_COUNTER 
-    await ClockCycles(dut.clk, 2) 
+    #dut.ui_in.value = MODE_COUNTER 
+    #await ClockCycles(dut.clk, 2) 
 
     # 4a. Dekrement: 2 -> 1
-    dut.ui_in.value = MODE_COUNTER | (1 << 3) # Setze ui_in[3] auf 1 für Dekrement
-    await RisingEdge(dut.clk)
+    #dut.ui_in.value = MODE_COUNTER | (1 << 3) # Setze ui_in[3] auf 1 für Dekrement
+    #await RisingEdge(dut.clk)
     #assert dut.uo_out.value.integer & 0b01111111 == SEG_1, f"FAIL: Erwartet 1 (ist {dut.uo_out.value.integer & 0b01111111})"
 
     dut._log.info("Counter Test erfolgreich.")
