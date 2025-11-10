@@ -26,7 +26,8 @@ project:
     - "game_counter.v"
     - "game_dice.v"
     - "game_higher_lower.v"
-    - "game_binary_quiz.v"
+    #- "game_binary_quiz.v"
+    #- "game_reaction.v"
     - "tt_um_seven_segment_games.v"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
@@ -37,9 +38,9 @@ pinout:
   ui[1]: "btn2"
   ui[2]: "btn3"
   ui[3]: "btn4"
-  ui[4]: "btn5"
-  ui[5]: "btn6"
-  ui[6]: "btn7"
+  ui[4]: ""#"btn5"
+  ui[5]: ""#"btn6"
+  ui[6]: ""#"btn7"
   ui[7]: "btn_game_switch"
 
   # Outputs
