@@ -26,7 +26,6 @@ project:
     - "game_counter.v"
     - "game_dice.v"
     - "game_higher_lower.v"
-    - "game_reaction.v"
     - "tt_um_seven_segment_games.v"
 
 # The pinout of your project. Leave unused pins blank. DO NOT delete or add any pins.
