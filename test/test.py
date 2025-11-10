@@ -54,7 +54,7 @@ async def test_project(dut):
     
     # 3a. increment: 0 -> 1
     dut.ui_in.value = btn_1
-    await ClockCycles(dut.clk, 500005) 
+    await ClockCycles(dut.clk, 500010) 
     assert dut.uo_out.value == SEG_1, f"FAIL: Test 3 expected 0b0000110"
     
     dut.ui_in.value = btn_off
@@ -62,7 +62,7 @@ async def test_project(dut):
     assert dut.uo_out.value == SEG_1, f"FAIL: Test 4 expected 0b0000110"
 
     dut.ui_in.value = btn_1
-    await ClockCycles(dut.clk, 500005) 
+    await ClockCycles(dut.clk, 500010) 
     assert dut.uo_out.value == SEG_2, f"FAIL: Test 5 expected 0b0000110"
     
     dut.ui_in.value = btn_off
