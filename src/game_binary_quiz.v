@@ -12,6 +12,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+
+// -------------------------------- due to limited tile size, this project isnt implemented -------------------------------------
+
+
 //`include "random_digit.v"
 
 //`timescale 1ns / 1ps
