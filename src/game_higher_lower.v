@@ -31,9 +31,10 @@ module game_higher_lower(
     );
 	
     // FSM
-    reg fsm_state, next_fsm_state;
-    localparam CHECK = 1'b0,
-               UPDATE = 1'b1;
+    reg [1:0] fsm_state, next_fsm_state;
+    localparam INIT   = 2'b00,
+               CHECK  = 2'b01,
+               UPDATE = 2'b10;
 
     reg [3:0] current_num, next_num;
 	
@@ -46,10 +47,10 @@ module game_higher_lower(
 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
-            fsm_state    <= CHECK;
-            current_num  <= rnd;
+            fsm_state    <= INIT;
+            current_num  <= 4'd0;
             counter_val  <= 0;
-            value        <= rnd;
+            value        <= 4'd0;
         end else begin
             fsm_state    <= next_fsm_state;
             current_num  <= next_num;
@@ -65,7 +66,13 @@ module game_higher_lower(
         next_value       = value;
 
         case (fsm_state)
-            CHECK: begin
+            INIT: begin
+				next_value     = rnd;
+                next_num       = rnd;
+                next_counter_val = 0;
+                next_fsm_state = CHECK;
+			
+			CHECK: begin
                 next_value = current_num;
                 next_counter_val = 0;
 
@@ -89,7 +96,7 @@ module game_higher_lower(
             end
 			
             default: begin
-                next_fsm_state = CHECK;
+                next_fsm_state = INIT;
             end
         endcase
     end
