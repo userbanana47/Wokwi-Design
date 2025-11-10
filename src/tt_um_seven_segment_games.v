@@ -40,8 +40,8 @@ module tt_um_seven_segment_games (
 	// ui_in[0] to ui_in[6] for games
     wire btn_raw_1 = ui_in[0];
     wire btn_raw_2 = ui_in[1];
-    wire btn_raw_3 = ui_in[2];
-    wire btn_raw_4 = ui_in[3];
+    //wire btn_raw_3 = ui_in[2];
+    //wire btn_raw_4 = ui_in[3];
 	//wire btn_raw_5 = ui_in[4];
 	//wire btn_raw_6 = ui_in[5];
 	//wire btn_raw_7 = ui_in[6];
