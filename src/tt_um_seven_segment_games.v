@@ -45,13 +45,15 @@ module tt_um_seven_segment_games (
 	//wire btn_raw_5 = ui_in[4];
 	//wire btn_raw_6 = ui_in[5];
 	//wire btn_raw_7 = ui_in[6];
+	
 	// ui_in[7] to switch games
 	wire btn_raw_switch = ui_in[7]; 
-    
+
+	// button pulse signals from button module
     wire btn1_pulse;
     wire btn2_pulse;
-    wire btn3_pulse;
-    wire btn4_pulse;
+    //wire btn3_pulse;
+    //wire btn4_pulse;
 	//wire btn5_pulse;
 	//wire btn6_pulse;
 	//wire btn7_pulse;
@@ -59,18 +61,13 @@ module tt_um_seven_segment_games (
     
     button btn_mod1 (.clk(clk), .reset(reset), .btn(btn_raw_1), .pulse(btn1_pulse));
     button btn_mod2 (.clk(clk), .reset(reset), .btn(btn_raw_2), .pulse(btn2_pulse));
-    button btn_mod3 (.clk(clk), .reset(reset), .btn(btn_raw_3), .pulse(btn3_pulse));
-    button btn_mod4 (.clk(clk), .reset(reset), .btn(btn_raw_4), .pulse(btn4_pulse));
+    //button btn_mod3 (.clk(clk), .reset(reset), .btn(btn_raw_3), .pulse(btn3_pulse));
+    //button btn_mod4 (.clk(clk), .reset(reset), .btn(btn_raw_4), .pulse(btn4_pulse));
 	//button btn_mod5 (.clk(clk), .reset(reset), .btn(btn_raw_4), .pulse(btn5_pulse));
 	//button btn_mod6 (.clk(clk), .reset(reset), .btn(btn_raw_4), .pulse(btn6_pulse));
 	//button btn_mod7 (.clk(clk), .reset(reset), .btn(btn_raw_4), .pulse(btn7_pulse));
     
-    button btn_mod_switch (
-        .clk(clk),
-        .reset(reset),
-        .btn(btn_raw_switch),
-        .pulse(btn_switch_pulse)
-    );
+	button btn_mod_switch (.clk(clk), .reset(reset), .btn(btn_raw_switch), .pulse(btn_switch_pulse));
     
 	// game selector (00=Counter, 01=Dice, 10=Higher/Lower, 11=quiz)
     reg [1:0] game_select_reg;
