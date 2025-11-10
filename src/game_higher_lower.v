@@ -71,6 +71,7 @@ module game_higher_lower(
                 next_num       = rnd;
                 next_counter_val = 0;
                 next_fsm_state = CHECK;
+			end
 			
 			CHECK: begin
                 next_value = current_num;
