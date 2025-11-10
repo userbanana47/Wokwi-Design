@@ -3,7 +3,7 @@
 
 import cocotb
 from cocotb.clock import Clock
-from cocotb.triggers import ClockCycles
+from cocotb.triggers import ClockCycles, RisingEdge
 
 SEG_0 = 0b0111111  # "0"
 SEG_1 = 0b0000110  # "1"
