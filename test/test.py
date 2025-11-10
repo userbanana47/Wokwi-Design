@@ -52,39 +52,47 @@ async def test_project(dut):
 
     # 3. Test increment
     
-    # 3a. increment: 0 -> 1
+    # increment: 0 -> 1
     dut.ui_in.value = btn_1
-    await ClockCycles(dut.clk, 500010) 
+    await ClockCycles(dut.clk, 500010) # wait for debounce time
     assert dut.uo_out.value == SEG_1, f"FAIL: Test 3 expected 0b0000110"
-    
+
+    # disable btn, check if value is still the same
     dut.ui_in.value = btn_off
     await ClockCycles(dut.clk, 100) 
     assert dut.uo_out.value == SEG_1, f"FAIL: Test 4 expected 0b0000110"
 
+    # increment: 1 -> 2
     dut.ui_in.value = btn_1
-    await ClockCycles(dut.clk, 500010) 
+    await ClockCycles(dut.clk, 500010) # wait for debounce time
     assert dut.uo_out.value == SEG_2, f"FAIL: Test 5 expected 0b0000110"
-    
+
+    # disable btn, check if value is still the same
     dut.ui_in.value = btn_off
     await ClockCycles(dut.clk, 100) 
     assert dut.uo_out.value == SEG_2, f"FAIL: Test 6 expected 0b0000110"
-
-    
-
-    # 3b. Inkrement: 1 -> 2
-    #await RisingEdge(dut.clk) # Noch einmal inkrementieren
-    #assert dut.uo_out.value.integer & 0b01111111 == SEG_2, f"FAIL: Erwartet 2 (ist {dut.uo_out.value.integer & 0b01111111})"
     
     # 4. Test decrement
     
-    # Zuerst Taster loslassen
-    #dut.ui_in.value = MODE_COUNTER 
-    #await ClockCycles(dut.clk, 2) 
+    # decrement: 2 -> 1
+    dut.ui_in.value = btn_2
+    await ClockCycles(dut.clk, 500010) # wait for debounce time
+    assert dut.uo_out.value == SEG_1, f"FAIL: Test 7 expected 0b0000110"
 
-    # 4a. Dekrement: 2 -> 1
-    #dut.ui_in.value = MODE_COUNTER | (1 << 3) # Setze ui_in[3] auf 1 für Dekrement
-    #await RisingEdge(dut.clk)
-    #assert dut.uo_out.value.integer & 0b01111111 == SEG_1, f"FAIL: Erwartet 1 (ist {dut.uo_out.value.integer & 0b01111111})"
+    # disable btn, check if value is still the same
+    dut.ui_in.value = btn_off
+    await ClockCycles(dut.clk, 100) 
+    assert dut.uo_out.value == SEG_1, f"FAIL: Test 8 expected 0b0000110"
+
+    # decrement: 1 -> 0
+    dut.ui_in.value = btn_2
+    await ClockCycles(dut.clk, 500010) # wait for debounce time
+    assert dut.uo_out.value == SEG_0, f"FAIL: Test 9 expected 0b0111111"
+
+    # disable btn, check if value is still the same
+    dut.ui_in.value = btn_off
+    await ClockCycles(dut.clk, 100) 
+    assert dut.uo_out.value == SEG_0, f"FAIL: Test 10 expected 0b0111111"
 
     dut._log.info("Counter Test erfolgreich.")
 
