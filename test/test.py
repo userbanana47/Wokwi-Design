@@ -11,6 +11,10 @@ SEG_2 = 0b1011011  # "2"
 SEG_3 = 0b1001111  # "3"
 SEG_9 = 0b1101111  # "9"
 
+btn_1 = 0b00000001
+btn_2 = 0b00000010
+btn_off = 0b00000000
+
 @cocotb.test()
 async def test_project(dut):
     dut._log.info("Start")
@@ -35,13 +39,13 @@ async def test_project(dut):
 
     # 2. Setup: Counter Mode wählen (ui_in[1:0] = 00)
     # UI_IN Zuweisung: [Modus: 1:0]
-    MODE_COUNTER = 0b00 
+    #MODE_COUNTER = 0b00 
     # Setze Modus und alle Taster (ui_in[7:2]) auf 0, ui_in[1:0] auf Counter Mode (00)
-    dut.ui_in.value = MODE_COUNTER
-    dut.uio_in.value = 0 # Nur falls benötigt, ansonsten 0
+    #dut.ui_in.value = MODE_COUNTER
+    #dut.uio_in.value = 0 # Nur falls benötigt, ansonsten 0
 
     await ClockCycles(dut.clk, 2)
-    dut._log.info("Im Counter Modus (00) gestartet")
+    #dut._log.info("Im Counter Modus (00) gestartet")
 
     # After two clock cycles the 7seg should still show the number 0
     assert dut.uo_out.value == SEG_0, f"FAIL: Test 2 expected 0b0111111"
@@ -49,8 +53,8 @@ async def test_project(dut):
     # 3. Test increment
     
     # 3a. increment: 0 -> 1
-    dut.ui_in.value = MODE_COUNTER | (1 << 2) # Setze ui_in[2] auf 1 für Inkrement
-    await RisingEdge(dut.clk)
+    dut.ui_in.value = btn_1;
+    await ClockCycles(dut.clk, 500010) 
     assert dut.uo_out.value == SEG_1, f"FAIL: Test 3 expected 0b0000110"
 
     # 3b. Inkrement: 1 -> 2
