@@ -73,7 +73,7 @@ module game_binary_quiz(
         next_value       = value;
         
 		// safe pressed button
-        reg [4:0] pressed_btn = 4'd0;
+        reg [4:0] pressed_btn;
         if (btn1) 		pressed_btn = 4'd1;
         else if (btn2) 	pressed_btn = 4'd2;
         else if (btn3) 	pressed_btn = 4'd3;
@@ -81,6 +81,7 @@ module game_binary_quiz(
 		else if (btn5) 	pressed_btn = 4'd5;
 		else if (btn6) 	pressed_btn = 4'd6;
 		else if (btn7) 	pressed_btn = 4'd7;
+		else 			pressed_btn = 4'd0;
 
 		// new random number
         reg [2:0] new_rnd_num;
