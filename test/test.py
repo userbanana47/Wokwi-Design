@@ -53,9 +53,15 @@ async def test_project(dut):
     # 3. Test increment
     
     # 3a. increment: 0 -> 1
-    dut.ui_in.value = btn_1;
-    await ClockCycles(dut.clk, 500000) 
+    dut.ui_in.value = btn_1
+    await ClockCycles(dut.clk, 500001) 
     assert dut.uo_out.value == SEG_1, f"FAIL: Test 3 expected 0b0000110"
+    
+    dut.ui_in.value = btn_off
+    await ClockCycles(dut.clk, 10) 
+    assert dut.uo_out.value == SEG_1, f"FAIL: Test 4 expected 0b0000110"
+
+    
 
     # 3b. Inkrement: 1 -> 2
     #await RisingEdge(dut.clk) # Noch einmal inkrementieren
