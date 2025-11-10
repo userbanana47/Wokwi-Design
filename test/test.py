@@ -30,10 +30,8 @@ async def test_project(dut):
 
     dut._log.info("Test project behavior")
 
-    # Nach Reset sollte der 7-Segment-Ausgang 0 anzeigen (value=0 -> seg=0111111)
-    # Beachte: uo_out ist 8-Bit, Bits 7:0. Wir prüfen nur 6:0, Bit 7 sollte 0 sein.
-    #assert dut.uo_out.value.integer & 0b01111111 == SEG_0, "FAIL: Initialwert sollte 0 sein"
-    assert dut.uo_out.value == SEG_0
+    # After the reset the 7seg should show the number 0 (SEG_0 -> 0b0111111)
+    assert dut.uo_out.value == SEG_0, f"FAIL: Test 1 expected 0b0111111"
 
     # 2. Setup: Counter Mode wählen (ui_in[1:0] = 00)
     # UI_IN Zuweisung: [Modus: 1:0]
@@ -45,18 +43,21 @@ async def test_project(dut):
     await ClockCycles(dut.clk, 2)
     dut._log.info("Im Counter Modus (00) gestartet")
 
-    # 3. Test Inkrement (Angenommen: Inkrement ist ui_in[2])
+    # After two clock cycles the 7seg should still show the number 0
+    assert dut.uo_out.value == SEG_0, f"FAIL: Test 2 expected 0b0111111"
+
+    # 3. Test increment
     
-    # 3a. Inkrement: 0 -> 1
+    # 3a. increment: 0 -> 1
     dut.ui_in.value = MODE_COUNTER | (1 << 2) # Setze ui_in[2] auf 1 für Inkrement
     await RisingEdge(dut.clk)
-    #assert dut.uo_out.value.integer & 0b01111111 == SEG_1, f"FAIL: Erwartet 1 (ist {dut.uo_out.value.integer & 0b01111111})"
+    assert dut.uo_out.value == SEG_1, f"FAIL: Test 3 expected 0b0000110"
 
     # 3b. Inkrement: 1 -> 2
-    await RisingEdge(dut.clk) # Noch einmal inkrementieren
+    #await RisingEdge(dut.clk) # Noch einmal inkrementieren
     #assert dut.uo_out.value.integer & 0b01111111 == SEG_2, f"FAIL: Erwartet 2 (ist {dut.uo_out.value.integer & 0b01111111})"
     
-    # 4. Test Dekrement (Angenommen: Dekrement ist ui_in[3])
+    # 4. Test decrement
     
     # Zuerst Taster loslassen
     dut.ui_in.value = MODE_COUNTER 
