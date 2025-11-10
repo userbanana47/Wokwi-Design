@@ -40,11 +40,11 @@ module game_binary_quiz(
     localparam WAIT        = 3'b000,	//wait for any button press to start
                SHOW_BIT1   = 3'b001,	//show Bit 1
                SHOW_BIT2   = 3'b010,	//show Bit 2
-               SHOW_BIT3   = 3'b011,	//show Bit 3
+               //SHOW_BIT3   = 3'b011,	//show Bit 3
                QUIZ        = 3'b100,	//show '?' and wait for corresponding button press
                RESULT      = 3'b101;	//show correct or error
     
-    reg [2:0] target_num, next_target_num;
+    reg [1:0] target_num, next_target_num;
     reg [3:0] next_value;
 
     // Delay-Counter
@@ -53,13 +53,13 @@ module game_binary_quiz(
     reg [COUNTER_LEN-1:0] counter_val, next_counter_val;
 
 	reg [2:0] pressed_btn;
-	reg [2:0] new_rnd_num;
+	reg [1:0] new_rnd_num;
 
     always @(posedge clk or posedge reset) begin
         if (reset) begin
             fsm_state     <= WAIT;
             counter_val   <= 0;
-            target_num    <= 3'd1;
+            target_num    <= 2'd1;
             value         <= 4'd0;
         end else begin
             fsm_state     <= next_fsm_state;
@@ -81,17 +81,17 @@ module game_binary_quiz(
         else if (btn2) 	pressed_btn = 3'd2;
         else if (btn3) 	pressed_btn = 3'd3;
         else if (btn4) 	pressed_btn = 3'd4;
-		else if (btn5) 	pressed_btn = 3'd5;
-		else if (btn6) 	pressed_btn = 3'd6;
-		else if (btn7) 	pressed_btn = 3'd7;
+		//else if (btn5) 	pressed_btn = 3'd5;
+		//else if (btn6) 	pressed_btn = 3'd6;
+		//else if (btn7) 	pressed_btn = 3'd7;
 		else 			pressed_btn = 3'd0;
 
 		// new random number
         //reg [2:0] new_rnd_num;
-		new_rnd_num = rnd[2:0];	//only use first 3 bits (0-7)
-		if (new_rnd_num == 3'd0) begin
-			new_rnd_num = 3'd5;
-		end
+		new_rnd_num = rnd[1:0];	//only use first 2 bits (0-3)
+/* 		if (new_rnd_num == 3'd0) begin
+			new_rnd_num = 3'd3;
+		end */
 		
 		//next_target_num = new_rnd_num;
 
@@ -106,19 +106,21 @@ module game_binary_quiz(
                 end
             end
 
-            SHOW_BIT1, SHOW_BIT2, SHOW_BIT3: begin
+            SHOW_BIT1, SHOW_BIT2: begin	//, SHOW_BIT3
                 next_value = 4'd0; // Default: 0
 
-                if (fsm_state == SHOW_BIT1) 	 next_value = target_num[2] ? 4'd1 : 4'd0; 	// MSD (2^2)
-                else if (fsm_state == SHOW_BIT2) next_value = target_num[1] ? 4'd1 : 4'd0; 	// Middle (2^1)
-                else if (fsm_state == SHOW_BIT3) next_value = target_num[0] ? 4'd1 : 4'd0; 	// LSD (2^0)
+                if (fsm_state == SHOW_BIT1) 	 next_value = target_num[1] ? 4'd1 : 4'd0;	//2^1
+                else if (fsm_state == SHOW_BIT2) next_value = target_num[0] ? 4'd1 : 4'd0;	//2^0
+				//if (fsm_state == SHOW_BIT1) 	 next_value = target_num[2] ? 4'd1 : 4'd0; 	// MSD (2^2)
+                //else if (fsm_state == SHOW_BIT2) next_value = target_num[1] ? 4'd1 : 4'd0; 	// Middle (2^1)
+                //else if (fsm_state == SHOW_BIT3) next_value = target_num[0] ? 4'd1 : 4'd0; 	// LSD (2^0)
                 
                 next_counter_val = counter_val + 1;
                 
                 if (counter_val >= DELAY_TIME) begin
                     next_counter_val = 0;
                     if (fsm_state == SHOW_BIT1) next_fsm_state = SHOW_BIT2;
-                    else if (fsm_state == SHOW_BIT2) next_fsm_state = SHOW_BIT3;
+                    //else if (fsm_state == SHOW_BIT2) next_fsm_state = SHOW_BIT3;
                     else next_fsm_state = QUIZ;
                 end
             end
@@ -130,7 +132,7 @@ module game_binary_quiz(
                 if (pressed_btn != 3'd0) begin
                     next_fsm_state = RESULT;
                     
-                    if (pressed_btn == target_num) begin
+                    if (pressed_btn[1:0] == target_num) begin
                         next_value = 4'd10; // correct
                     end else begin
                         next_value = 4'd11; // error
